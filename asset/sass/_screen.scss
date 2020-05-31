@@ -51,7 +51,8 @@ a {
 
 p a,
 span a {
-    background-color: $primary-color;
+    color: $primary-color;
+    text-decoration: underline;
 }
 
 p,
@@ -235,9 +236,9 @@ nav li {
 }
 
 .secondary-nav li a {
-    background-color: $primary-color;
+    color: $primary-color;
     font-family: $heading-font;
-    color: #000;
+    // color: #000;
     padding: $spacing-s $spacing-m;
     font-size: .75 * $base-font-size;
 }
@@ -300,7 +301,8 @@ nav li {
 }
 
 .item-pagination a {
-    background-color: $primary-color;
+    color: $primary-color;
+    text-decoration: underline;
     padding: $spacing-s $spacing-m;
 }
 
@@ -527,7 +529,7 @@ div#featured {
 }
 
 #featured .featured-meta h3 {
-    background-color: $primary-color;
+    color: $primary-color;
 }
 
 #featured .featured-meta h3 a {
@@ -769,7 +771,8 @@ footer {
 }
 
 .value a span {
-    background-color: $primary-color;
+    color: $primary-color;
+    text-decoration: underline;
 }
 
 .value a.metadata-browse-link {
