@@ -25,12 +25,16 @@ $pagination->setFragment($fragment);
 
 <?php foreach ($subjectValues as $term => $values): ?>
 <table class="tablesaw tablesaw-stack" data-tablesaw-mode="stack">
-<caption class="linked-resource-property"><?php echo $escape($this->translate($values[0]->property()->label())); ?></caption>
+<caption class="linked-resource-property" style="text-align:center">Links to this item by '<?php echo $escape($values[0]->property()->label()); ?>'</caption>
 <thead>
     <tr>
-    <th><?php echo $translate('Title'); ?></th>
-    <th><?php echo $translate('Alternate label'); ?></th>
-    <th><?php echo $translate('Class'); ?></th>
+    <th><?php echo $this->translate('Title'); ?></th>
+    <th><?php echo $this->translate('Description'); ?></th>
+    <th><?php echo $this->translate('Image'); ?></th>
+    <th><?php echo $this->translate('P-in-P Link'); ?></th>
+<!-- 
+    <th><?php echo $this->translate('Class'); ?></th>
+-->
     </tr>
 </thead>
 <tbody>
@@ -38,21 +42,27 @@ $pagination->setFragment($fragment);
     <?php
     $template = $value->resource()->resourceTemplate();
     $templateProperty = $template ? $template->resourceTemplateProperty($value->property()->id()) : null;
-    $altLabel = $templateProperty ? $templateProperty->alternateLabel() : null;
+    $pipUrl = $value->resource()->value('p-lod:p-in-p-url', ['type' => 'uri']);
+    $imgUrl = $value->resource()->value('p-lod:image-url', ['type' => 'uri']);
+    $description = $value->resource()->value('dcterms:description', ['type' => 'literal', 'default' => '']);
     ?>
     <tr class="linked-resource">
         <td><?php echo $value->resource()->linkPretty(); ?></td>
-        <td>
-        <?php if ($altLabel): ?>
-        <span class="alternate-label"><?php echo $this->escapeHtml($altLabel); ?></span>
+ 
+        <td><?php echo $this->escapeHtml($description); ?></td>
+ 
+         <td>
+        <?php if ($imgUrl): ?>
+        <span class="alternate-label"><img style="max-width:100px" src="<?php echo $imgUrl->uri(); ?>"></img></span>
         <?php endif; ?>
         </td>
+        
         <td>
-        <?php if ($value->resource()->resourceClass()): ?>
-        <span class="resource-class"><?php echo $this->escapeHtml($translate($value->resource()->resourceClass()->label())); ?></span>
+        <?php if ($pipUrl): ?>
+        <span class="alternate-label"><a target="_new" href="<?php echo $pipUrl->uri(); ?>">🔗</a></span>
         <?php endif; ?>
         </td>
-    </tr>
+   </tr>
     <?php endforeach; ?>
 </tbody>
 </table>
