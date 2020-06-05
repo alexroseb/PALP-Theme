@@ -1,3 +1,14 @@
+/* @group ----- Custom ----- */
+
+.sidebar{
+    @include span(4 last);
+}
+.item-show{
+    @include span(12);
+}
+
+/* @end */
+
 /* @group ----- Generic HTML Elements ----- */
 
 * {
