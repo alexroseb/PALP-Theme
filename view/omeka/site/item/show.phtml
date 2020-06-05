@@ -50,7 +50,7 @@ if ($subjectValues) {
 /* use api to get image url and render if there is one. */
  $imgUrl =  $item->value('p-lod:image-url', ['type' => 'uri']);
  if ($imgUrl): ?>
-<div id="pipimage"><img style="max-width:300px" src="<?php echo $imgUrl->uri();?>"></img></div>
+<div id="pipimage"><img style="max-width:300px" src="<?php echo $imgUrl->uri();?>"></div>
 
 <?php endif; ?>
 
