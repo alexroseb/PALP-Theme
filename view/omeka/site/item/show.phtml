@@ -15,6 +15,7 @@ if ($subjectValues) {
     $this->headLink()->prependStylesheet($this->assetUrl('vendor/tablesaw/tablesaw.stackonly.css', 'Omeka'));
 }
 ?>
+
 <?php foreach ($item->media() as $media): ?>
     <?php $mediaType = $media->mediaType(); ?>
     <?php $mediaRenderer = $media->renderer(); ?>
@@ -37,6 +38,15 @@ if ($subjectValues) {
         </li>
     <?php endforeach; ?>
 </ul>
+<?php endif; ?>
+
+<!-- IMAGE DISPLAY -->
+<?php
+/* use api to get image url and render if there is one. */
+ $imgUrl =  $item->value('p-lod:image-url', ['type' => 'uri']);
+ if ($imgUrl): ?>
+<div id="pipimage"><img style="max-width:300px" src="<?php echo $imgUrl->uri();?>"></img></div>
+
 <?php endif; ?>
 
 <!-- MAPPING -->
@@ -64,6 +74,7 @@ if ($('#item-geojson').html().trim()) {
        
 }
 </script>
+<?php include 'palptheme/view/h-browser.php' ?>
 
 <?php echo $item->displayValues(); ?>
 
