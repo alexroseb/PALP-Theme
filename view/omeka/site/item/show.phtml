@@ -15,6 +15,9 @@ if ($subjectValues) {
     $this->headLink()->prependStylesheet($this->assetUrl('vendor/tablesaw/tablesaw.stackonly.css', 'Omeka'));
 }
 ?>
+<script>
+  CollapsibleLists.apply();
+</script>
 
 <?php foreach ($item->media() as $media): ?>
     <?php $mediaType = $media->mediaType(); ?>

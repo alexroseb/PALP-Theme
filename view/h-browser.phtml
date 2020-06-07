@@ -71,48 +71,48 @@ $api = $serviceLocator->get('Omeka\ApiManager');
 # any hierarchy returned? If not, skip.
 if(count($result)) {
 
-echo "<p>Spatial Hierarchy:";
+echo "<h3>Spatial Hierarchy</h3><ul class='collapsibleList' ><li>";
 
 if ($result[0]['parent7_id']) {
 $response = $api->read('items', $result[0]['parent7_id']);
 $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
-echo ' - ';
+echo '</li><li>';
 }
 
 if ($result[0]['parent6_id']) {
 $response = $api->read('items', $result[0]['parent6_id']);
 $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
-echo ' - ';
+echo '</li><li>';
 }
 
 if ($result[0]['parent5_id']) {
 $response = $api->read('items', $result[0]['parent5_id']);
 $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
-echo ' - ';
+echo '</li><li>';
 }
 
 if ($result[0]['parent4_id']) {
 $response = $api->read('items', $result[0]['parent4_id']);
 $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
-echo ' - ';
+echo '</li><li>';
 }
 
 if ($result[0]['parent3_id']) {
 $response = $api->read('items', $result[0]['parent3_id']);
 $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
-echo ' - ';
+echo '</li><li>';
 }
 
 if ($result[0]['parent2_id']) {
 $response = $api->read('items', $result[0]['parent2_id']);
 $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
-echo ' - ';
+echo '</li><li>';
 }
 
 if ($result[0]['parent_id']) {
@@ -121,5 +121,5 @@ $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
 }
 }
-echo "</p>";
+echo "</li></ul>";
 ?>
