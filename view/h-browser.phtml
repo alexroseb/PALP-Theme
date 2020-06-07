@@ -71,7 +71,7 @@ $api = $serviceLocator->get('Omeka\ApiManager');
 # any hierarchy returned? If not, skip.
 if(count($result)) {
 
-echo "<h3>Spatial Hierarchy</h3><ul class='treeView' ><li>";
+echo "<h3>Spatial Hierarchy</h3><ul class='collapsibleList' ><li>";
 
 if ($result[0]['parent7_id']) {
 $response = $api->read('items', $result[0]['parent7_id']);
