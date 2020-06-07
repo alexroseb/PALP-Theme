@@ -71,13 +71,13 @@ $api = $serviceLocator->get('Omeka\ApiManager');
 # any hierarchy returned? If not, skip.
 if(count($result)) {
 
-echo "<h3>Spatial Hierarchy</h3><ul class='collapsibleList' ><li>";
+echo "<h3>Spatial Hierarchy</h3><ul class='treeView' ><li>";
 
 if ($result[0]['parent7_id']) {
 $response = $api->read('items', $result[0]['parent7_id']);
 $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
-echo '<ul><li>test sub-item</li></ul></li><li>';
+echo '</li><li>';
 }
 
 if ($result[0]['parent6_id']) {
@@ -121,5 +121,23 @@ $itemRepresentation = $response->getContent();
 echo $itemRepresentation->link($itemRepresentation->title());
 }
 }
-echo "</li></ul>";
+echo '<ul class="collapsibleList">
+            <li>
+              Example sub-item
+              <ul>
+                <li>
+                  Sub-sub-item
+                  <ul>
+                    <li>sub-sub-sub item</li>
+                    <li>sub-sub-sub item</li>
+                  </ul>
+                </li>
+                <li>
+                  Sub-sub-item
+                  <ul>
+                    <li>sub-sub-sub item</li>
+                    <li>sub-sub-sub item</li>
+                  </ul>
+                </li>
+              </ul></li></ul>';
 ?>
