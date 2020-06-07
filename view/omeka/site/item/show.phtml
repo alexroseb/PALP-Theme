@@ -16,8 +16,43 @@ if ($subjectValues) {
 }
 ?>
 <script>
-  runOnLoad(CollapsibleLists.apply());
+    runOnLoad(function(){ CollapsibleLists.apply(); });
 </script>
+
+      <ul class="treeView">
+        <li>
+          Collapsible lists
+          <ul class="collapsibleList">
+            <li>
+              Actions
+              <ul>
+                <li>
+                  Creation
+                  <ul>
+                    <li>apply()</li>
+                    <li class="lastChild">applyTo(node)</li>
+                  </ul>
+                </li>
+                <li class="lastChild">
+                  Toggling
+                  <ul>
+                    <li>Expanding/opening</li>
+                    <li class="lastChild">Collapsing/closing</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="lastChild">
+              Uses
+              <ul>
+                <li>Directory listings</li>
+                <li>Tree views</li>
+                <li class="lastChild">Outline views</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
 
 <?php foreach ($item->media() as $media): ?>
     <?php $mediaType = $media->mediaType(); ?>
