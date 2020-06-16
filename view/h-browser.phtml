@@ -1,152 +1,6 @@
 <div id="h-browser">
-<?php # TEST DIRECT SQL QUERY
-
-// $sql = <<<ENDSQL
-// SELECT p1.resource_id AS child_id,
-//                rtypes.value_resource_id AS child_type,
-//                p1.property_id AS child_to_p1,
-//                p1.value_resource_id AS parent_id,
-//                p2.property_id AS prop2_id,
-//                p2.value_resource_id AS parent2_id,
-//                p3.property_id AS prop3_id,
-//                p3.value_resource_id AS parent3_id,
-//                p4.property_id AS prop4_id,
-//                p4.value_resource_id AS parent4_id,
-//                p5.property_id AS prop5_id,
-//                p5.value_resource_id AS parent5_id,
-//                p6.property_id AS prop6_id,
-//                p6.value_resource_id AS parent6_id,
-//                p7.property_id AS prop7_id,
-//                p7.value_resource_id AS parent7_id 
-
-// FROM        value p1 
-// LEFT JOIN   value rtypes ON rtypes.resource_id = p1.resource_id AND rtypes.property_id = 289
-// LEFT JOIN   value p2 ON p2.resource_id = p1.value_resource_id 
-// LEFT JOIN   value p3 ON p3.resource_id = p2.value_resource_id 
-// LEFT JOIN   value p4 ON p4.resource_id = p3.value_resource_id  
-// LEFT JOIN   value p5 ON p5.resource_id = p4.value_resource_id  
-// LEFT JOIN   value p6 ON p6.resource_id = p5.value_resource_id
-// LEFT JOIN   value p7 ON p7.resource_id = p6.value_resource_id
-
-// WHERE  ?  IN (p1.resource_id,
-//                    p1.value_resource_id, 
-//                    p2.value_resource_id, 
-//                    p3.value_resource_id, 
-//                    p4.value_resource_id, 
-//                    p5.value_resource_id, 
-//                    p6.value_resource_id, 
-//                    p7.value_resource_id)
-
-// AND (p1.property_id IN (305,313,315) OR ISNULL(p1.property_id))
-// AND (p2.property_id IN (305,313,315) OR ISNULL(p2.property_id))
-// AND (p3.property_id IN (305,313,315) OR ISNULL(p3.property_id))
-// AND (p4.property_id IN (305,313,315) OR ISNULL(p4.property_id))
-// AND (p5.property_id IN (305,313,315) OR ISNULL(p5.property_id))
-// AND (p6.property_id IN (305,313,315) OR ISNULL(p6.property_id))
-// AND (p7.property_id IN (305,313,315) OR ISNULL(p7.property_id))
-// ENDSQL;
-
-// $serviceLocator = $site->getServiceLocator();
-// $connection = $serviceLocator->get('Omeka\Connection');
-
-// # $limit = '100';
-// $bind = array($item->id());
-// $result = $connection->fetchAll($sql, $bind);
-// # connection *must* be closed or it will block other queries that this page makes. 
-// $connection->close();
-
-
-// # echo '<pre style="display:none">';
-// # echo print_r($result);
-// # echo '</pre>';
-
-?>
-
-
-
-
-<?php
-
-// $api = $serviceLocator->get('Omeka\ApiManager');
-
-// # any hierarchy returned? If not, skip.
-// if(count($result)) {
-
-// echo "<h3>Spatial Hierarchy</h3><ul class='collapsibleList' ><li>";
-
-// if ($result[0]['parent7_id']) {
-// $response = $api->read('items', $result[0]['parent7_id']);
-// $itemRepresentation = $response->getContent();
-// echo $itemRepresentation->link($itemRepresentation->title());
-// echo '</li><li>';
-// }
-
-// if ($result[0]['parent6_id']) {
-// $response = $api->read('items', $result[0]['parent6_id']);
-// $itemRepresentation = $response->getContent();
-// echo $itemRepresentation->link($itemRepresentation->title());
-// echo '</li><li>';
-// }
-
-// if ($result[0]['parent5_id']) {
-// $response = $api->read('items', $result[0]['parent5_id']);
-// $itemRepresentation = $response->getContent();
-// echo $itemRepresentation->link($itemRepresentation->title());
-// echo '</li><li>';
-// }
-
-// if ($result[0]['parent4_id']) {
-// $response = $api->read('items', $result[0]['parent4_id']);
-// $itemRepresentation = $response->getContent();
-// echo $itemRepresentation->link($itemRepresentation->title());
-// echo '</li><li>';
-// }
-
-// if ($result[0]['parent3_id']) {
-// $response = $api->read('items', $result[0]['parent3_id']);
-// $itemRepresentation = $response->getContent();
-// echo $itemRepresentation->link($itemRepresentation->title());
-// echo '</li><li>';
-// }
-
-// if ($result[0]['parent2_id']) {
-// $response = $api->read('items', $result[0]['parent2_id']);
-// $itemRepresentation = $response->getContent();
-// echo $itemRepresentation->link($itemRepresentation->title());
-// echo '</li><li>';
-// }
-
-// if ($result[0]['parent_id']) {
-// $response = $api->read('items', $result[0]['parent_id']);
-// $itemRepresentation = $response->getContent();
-// echo $itemRepresentation->link($itemRepresentation->title());
-// }
-// }
-// echo '<ul class="collapsibleList">
-//             <li>
-//               Example sub-item
-//               <ul>
-//                 <li>
-//                   Sub-sub-item
-//                   <ul>
-//                     <li>sub-sub-sub item</li>
-//                     <li>sub-sub-sub item</li>
-//                   </ul>
-//                 </li>
-//                 <li>
-//                   Sub-sub-item
-//                   <ul>
-//                     <li>sub-sub-sub item</li>
-//                     <li>sub-sub-sub item</li>
-//                   </ul>
-//                 </li>
-//               </ul></li></ul>';
-?>
-
 <?php
 $pompeii_id = "23";
-// $itemResponse = $this->api()->read('items', $item->id());
-// $itemRep= $itemResponse->getContent();
 
 $result = [
   "id" => $item->id(),
@@ -209,20 +63,37 @@ if ($p){
     }
   }
 }
+krsort($result["parents"]);
 ?>
 
 <h3>Spatial Hierarchy</h3>
-<ul class='collapsibleList'>
-  <li>
-    <ul class="collapsibleList">
-      <li>
-         Example sub-item
-      </li>
-    </ul>
-  </li>
-</ul>
+<div>
+<ul class="collapsibleList">
+<?php foreach ($result['parents'] as $parent):?>
+  <?php if( array_key_exists('siblings', $parent)): ?>
+  <?php foreach ($parent['siblings'] as $sibling): ?>
+      <li> <?php echo($this->api()->read('items', $sibling)->getContent()->linkPretty()); ?>
+  <?php endforeach; ?>
+  <?php endif; ?>
+  <li> <?php echo($this->api()->read('items', $parent['id'])->getContent()->linkPretty()); ?>
+  <ul>
+<?php endforeach; ?>
+  <?php foreach ($result['siblings'] as $sibling): ?>
+      <li> <?php echo($this->api()->read('items', $sibling)->getContent()->linkPretty()); ?></li>
+  <?php endforeach; ?>
+<li> <?php echo($this->api()->read('items', $result['id'])->getContent()->linkPretty()); ?>
+  <ul>
+    <?php foreach ($result['children'] as $child): ?>
+      <li> <?php echo($this->api()->read('items', $child)->getContent()->linkPretty()); ?>
+  <?php endforeach; ?>
+</li></ul>
 
+<?php foreach (range(0, count($result['parents'])) as $number):?>
+</ul></li>
+<?php endforeach; ?>
+</ul>
 </div>
+
 <div id="minimap">
 <!-- div with geojson, populated by php call to api -->
 <div id="minimap-geojson" style="display:none"><?php
@@ -248,4 +119,5 @@ if ($('#minimap-geojson').html().trim()) {
        
 }
 </script>
+</div>
 </div>
