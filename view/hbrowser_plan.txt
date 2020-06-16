@@ -1,0 +1,52 @@
+result = [
+	"item" => item,
+];
+
+get item -> children
+result["children"] = [list_of_children]
+
+p = item -> parent
+parent_list_start = []
+
+i = 0
+
+while p != pompeii:
+	parent_list_start["item"] = p
+	get p -> siblings
+	parent_list_start["siblings"] = [list_of_siblings]
+	get p -> geoJson
+	parent_list_start["geojson"] = [geoJson]
+	result["p" + str(i)] = parent_list_start
+	i++
+	p = p -> parent
+	parent_list_start = []
+
+result["p" + str(i)] = ["item" => pompeii_id, "geojson" = pompeii_geoJson];
+
+
+goal: dict (essentially json)
+
+result = [
+	"item" => item,
+	"children" => [child1, child2, child3],
+	"p1" => [
+		"item" => parent1, 
+		"siblings" => [parent1sib1, parent1sib2, parent1sib3],
+		"geojson" => parent1geojson
+	],
+	"p2" => [
+		"item" => parent2, 
+		"siblings" => [parent2sib1, parent2sib2, parent2sib3],
+		"geojson" => parent2geojson
+	],
+	...
+	"pX" => [
+		"item" => parentX, 
+		"siblings" => [parentXsib1, parentXsib2, parentXsib3],
+		"geojson" => parentXgeojson
+	],
+	"p(X+1)" => [
+		"item" => pompeii_id, 
+		"geojson" => pompeii_geoJson
+	],
+];

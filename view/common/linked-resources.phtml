@@ -10,7 +10,7 @@ $pagination = $this->pagination(null, $totalCount, $page, $perPage);
 $pagination->setFragment($fragment);
 ?>
 <div id="linked-resources">
-<div class="linked-header">
+<!-- <div class="linked-header">
     <div id="linked-filter">
         <h4><?php echo $translate('Filter by property'); ?></h4>
         <select id="filter-property" name="property" data-url="<?php echo $escape($this->url(null, [], true)); ?>" data-fragment="<?php echo $escape($fragment); ?>">
@@ -21,7 +21,7 @@ $pagination->setFragment($fragment);
         </select>
     </div>
     <?php echo ($totalCount > $perPage) ? $pagination : ''; ?>
-</div>
+</div> -->
 
 <?php foreach ($subjectValues as $term => $values): ?>
 <table class="tablesaw tablesaw-stack" data-tablesaw-mode="stack">
