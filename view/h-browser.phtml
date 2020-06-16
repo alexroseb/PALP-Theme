@@ -143,37 +143,84 @@
 //               </ul></li></ul>';
 ?>
 
-
 <?php
-$itemResponse = $this->api()->read('items', $item->id());
-$itemRep= $itemResponse->getContent();
+$pompeii_id = "23";
+// $itemResponse = $this->api()->read('items', $item->id());
+// $itemRep= $itemResponse->getContent();
 
-echo($itemRep);
+$result = [
+  "id" => $item->id(),
+  "children" => [],
+  "siblings" => [],
+  "parents" => [],
+];
 
-// $result = ["item" => $itemRep[]];
+$subjectValues = $item->subjectValues();
+if($subjectValues){
+  foreach ($subjectValues["p-lod:spatially-within"] as $value){
+    $result['children'][] = $value->resource()->id();
+  }
+}
 
-// get item -> children
-// result["children"] = [list_of_children]
+$p = $item->value("p-lod:spatially-within")->valueResource();
 
-// p = item -> parent
-// parent_list_start = []
+if ($p){
 
-// i = 0
+  $subjectValues = $p->subjectValues();
+  foreach ($subjectValues["p-lod:spatially-within"] as $value){
+    if($value->resource()->id() != $item->id()){
+      $result['siblings'][] = $value->resource()->id();
+    }
+  }
 
-// while p != pompeii:
-//   parent_list_start["item"] = p
-//   get p -> siblings
-//   parent_list_start["siblings"] = [list_of_siblings]
-//   get p -> geoJson
-//   parent_list_start["geojson"] = [geoJson]
-//   result["p" + str(i)] = parent_list_start
-//   i++
-//   p = p -> parent
-//   parent_list_start = []
+  $i = 0;
 
-// result["p" + str(i)] = ["item" => pompeii_id, "geojson" = pompeii_geoJson];
+  while($p->id() != $pompeii_id){
+    $parentList = [];
+    $parentList["id"] = $p->id();
+    if($p->value("p-lod:geojson")){
+      $parentList["geoJSON"] = $p->value("p-lod:geojson")->asHtml();
+    } else {
+      $parentList["geoJSON"] = "";
+    }
+    $parentList["siblings"] = [];
+    $result["parents"]["p" . strval($i)] = $parentList;
 
+    if($i > 0){
+      $subjectValues = $p->subjectValues();
+      foreach ($subjectValues["p-lod:spatially-within"] as $value){
+        if($value->resource()->id() != $result["parents"]["p" . strval($i-1)]["id"]){
+          $result["parents"]["p" . strval($i-1)]['siblings'][] = $value->resource()->id();
+        }
+      }
+    }
+
+    $i++;
+    $p = $p->value("p-lod:spatially-within")->valueResource();
+  }
+
+  $result["parents"]["p" . strval($i)] = ["id" => $p->id(), "geoJSON" => $p->value("p-lod:geojson")->asHtml()];
+  if($i > 0){
+    $subjectValues = $p->subjectValues();
+    foreach ($subjectValues["p-lod:spatially-within"] as $value){
+      if($value->resource()->id() != $result["parents"]["p" . strval($i-1)]["id"]){
+        $result["parents"]["p" . strval($i-1)]['siblings'][] = $value->resource()->id();
+      }
+    }
+  }
+}
 ?>
+
+<h3>Spatial Hierarchy</h3>
+<ul class='collapsibleList'>
+  <li>
+    <ul class="collapsibleList">
+      <li>
+         Example sub-item
+      </li>
+    </ul>
+  </li>
+</ul>
 
 </div>
 <div id="minimap">
@@ -183,7 +230,7 @@ echo $item->value('p-lod:geojson', ['type' => 'literal']);
 ?></div>
 
 
-<div id="minimapid" style="width: 800px; height: 600px;display:none"></div>
+<div id="minimapid" style="width: 100px; height: 100px;display:none"></div>
 <script>
 // check if the item-geojson div has content and make a map if it does. 
 if ($('#minimap-geojson').html().trim()) {
